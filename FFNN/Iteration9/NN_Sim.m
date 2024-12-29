@@ -1,5 +1,5 @@
 %% Import Neural Network
-net = importNetworkFromONNX("SteeringModel_Iteration8.onnx", "InputDataFormats", "BC");
+net = importNetworkFromONNX("SteeringModel_Iteration9.onnx", "InputDataFormats", "BC");
 
 %% Import Reference Run
 
@@ -84,7 +84,8 @@ for i = 1:size(runStruct.data, 1)
         if i + k*kLookAhead <= size(runStruct.data,1)
             rLookAhead(1,k) = curvatureCol(i+k*kLookAhead);
         else
-            rLookAhead(1,k) = curvatureCol(k*kLookAhead);
+            pointsToEnd = size(runStruct.data,1) - i;
+            rLookAhead(1,k) = curvatureCol(k*(kLookAhead)-pointsToEnd);
         end
     end
 
