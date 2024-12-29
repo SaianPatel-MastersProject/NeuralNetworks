@@ -99,18 +99,24 @@ for i = 1:size(data, 2)
 
     rLookAhead = [];
     nLookAhead = 5;
+    kLookAhead = 100;
+    iLookAhead = [];
     for j = 1:size(data_i,1)
         for k = 1:nLookAhead
-            if j + k <= size(data_i,1)
-                rLookAhead(j,k) = curvatureCol(j+k);
+            if j + k * kLookAhead <= size(data_i,1)
+                rLookAhead(j,k) = curvatureCol(j+k*kLookAhead);
+                iLookAhead(j,k) = j+k*kLookAhead;
             else
-                rLookAhead(j,k) = curvatureCol()
+                % Difference between current point and end
+                pointsToEnd = size(data_i,1) - j;
+                rLookAhead(j,k) = curvatureCol(k*(kLookAhead)-pointsToEnd);
+                iLookAhead(j,k) = k*(kLookAhead)-pointsToEnd;
             end
         end
     end
 
 
-    dataArray_i = [data_i.CTE, ([0; diff(data_i.CTE)]), curvatureCol, ([0; diff(curvatureCol)]), data_i.HeadingError, data_i.steerAngle ];
+    dataArray_i = [data_i.CTE, ([0; diff(data_i.CTE)]), curvatureCol, ([0; diff(curvatureCol)]), data_i.HeadingError, rLookAhead, data_i.steerAngle ];
     
     if i == 1
 
@@ -131,6 +137,11 @@ columnNames = {
     'curvature';
     'dCurvature';
     'HeadingError';
+    'lookAhead1';
+    'lookAhead2';
+    'lookAhead3';
+    'lookAhead4';
+    'lookAhead5';
     'steerAngle';
 };
 
