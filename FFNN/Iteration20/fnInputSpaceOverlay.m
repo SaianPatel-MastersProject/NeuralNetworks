@@ -84,6 +84,35 @@ function fnInputSpaceOverlay(trainingData, runData, trainingIdx)
 
     end
 
+    % Plot the inputs over time
+    figure("Name", 'Input Over Time')
+
+    % Get the number of points
+    nPoints = size(runData, 1);
+
+    for i = 1:nInputs
+
+        subplot(nInputs, 1, i);
+        hold on
+
+        % plot max and min values as a line
+        t = (1:nPoints)' .* 0.01;
+        maxVal = max(inputData.(inputColumns{i}));
+        maxVals(1:nPoints, 1) = maxVal;
+        minVal = min(inputData.(inputColumns{i}));
+        minVals(1:nPoints, 1) = minVal;
+
+        plot(t, maxVals, 'Color', 'black', 'LineStyle', '--')
+        plot(t, minVals, 'Color', 'black', 'LineStyle', '--')
+
+        plot(t, runData.(inputColumns{i}))
+
+        ylabel(inputColumns{i})
+
+        
+
+    end
+
 
 
 

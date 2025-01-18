@@ -9,4 +9,4 @@ runStruct = Utilities.fnLoadLayer(runStruct, 'VE');
 
 %%
 % Call the plotter
-fnInputSpaceOverlay(TrainingData, runStruct.data(runStruct.data.lapNumber > 0, :), [1:5]);
+fnInputSpaceOverlay(TrainingData, runStruct.data(runStruct.data.lapNumber > 0, :), [1:10]);
