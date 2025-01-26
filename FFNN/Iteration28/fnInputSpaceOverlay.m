@@ -3,7 +3,9 @@ function fnInputSpaceOverlay(trainingData, runData, trainingIdx)
     
     % Get AIW Data
     % Read in the AIW Data and Interpolate it, get curvature (kappa)
-    AIW_Table = readtable('+PostProcessing\+CTE\Arrow.csv');
+    AIW_Table = readtable('+PostProcessing\+CTE\Arrow_IP.csv');
+    % Get the curvature, kappa
+    [kappa, ~] = PostProcessing.PE.fnCalculateCurvature([AIW_Table.x, AIW_Table.y]);
 
     nPoints  = 10000;
     interpMethod = 'spline';
@@ -14,16 +16,13 @@ function fnInputSpaceOverlay(trainingData, runData, trainingIdx)
     dNew = (linspace(0, rollingDistance(end), nPoints))';
     xInterp = interp1(rollingDistance, AIW_Data(:,1), dNew, interpMethod);
     yInterp = interp1(rollingDistance, AIW_Data(:,2), dNew, interpMethod);
+    kappaInterp = interp1(rollingDistance, kappa, dNew, interpMethod);
     AIW_Data = [xInterp, yInterp];
-
-    % Get the curvature, kappa
-    [kappa, ~] = PostProcessing.PE.fnCalculateCurvature(AIW_Data);
 
     % Create the equivalents of the training data for the run data (with
     % the same column names)
     runData.dCTE = [0; diff(runData.CTE)]; % Derivative of CTE
-    runData.curvature = 1 ./ runData.rCurvature; % Curvature (kappa)
-    runData.dCurvature = [0; diff(runData.curvature)];
+    runData.curvature = runData.kappa; % Curvature (kappa)
 
     nLookAheadPoints = 5;
     lookAheadSpacing = 100;
@@ -39,7 +38,7 @@ function fnInputSpaceOverlay(trainingData, runData, trainingIdx)
         [~, closestWaypointIdx] = min(d);
 
         % Look Ahead in Kappa
-        runLookAhead(i, :) = Utilities.fnGetLookAheadValues(kappa, closestWaypointIdx, lookAheadSpacing, nLookAheadPoints);
+        runLookAhead(i, :) = Utilities.fnGetLookAheadValues(kappaInterp, closestWaypointIdx, lookAheadSpacing, nLookAheadPoints);
 
 
     end
