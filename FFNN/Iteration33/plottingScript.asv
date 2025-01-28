@@ -1,0 +1,28 @@
+%% Plotting Script - Iteration 33
+
+obj = Plotting.multiPlotter();
+
+% Add training run
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData/2024/FYP12_09/2024_FYP12_09_D4_R17.mat', true, []);
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP01_27\2025_FYP01_27_D2_R01.mat', true, [4:8]);
+
+% Add reference lap
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData/2024/FYP12_09/2024_FYP12_09_D4_R17.mat', 12); % Human
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP01_27\2025_FYP01_27_D2_R01.mat', 6); % FFNN 33
+
+%%%%%%%% Plotting Commands
+
+%% Plot the racing line
+obj.plotRacingLine(true);
+
+%% Plot steering angle wi
+
+%% Plot variability relative to the human data
+obj.plotEnvelope(1, 'CTE', true);
+obj.plotEnvelope(1, 'HeadingError', true);
+obj.plotEnvelope(1, 'steerAngle', true);
+
+%% Plot variability relative of the FFNN
+obj.plotEnvelope(2, 'CTE', false);
+obj.plotEnvelope(2, 'HeadingError', false);
+obj.plotEnvelope(2, 'steerAngle', false);
