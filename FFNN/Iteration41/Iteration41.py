@@ -79,4 +79,4 @@ plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', li
 plt.legend()
 plt.show()
 
-model.export("Iteration41\\SteeringModel_Iteration41b")
+model.export("Iteration41\\SteeringModel_Iteration41")
