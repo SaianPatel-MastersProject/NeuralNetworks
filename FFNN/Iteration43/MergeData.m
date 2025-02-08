@@ -1,0 +1,120 @@
+%% Runs and Laps
+runsLaps = {
+    'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', [], 'SUZ'; ... % SUZ
+    'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D6_R02.mat', [], 'SUZ_M'; ... % SUZ_M
+    'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D6_R04.mat', [11], 'SUZ_R'; ... % SUZ_R
+    'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D6_R06.mat', [9], 'SUZ_MR'; ... % SUZ_MR
+    'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D6_R07.mat', [], 'SUZ_MR'; ... % SUZ_MR
+
+};
+
+%% Read in each run data
+data = struct('runID', '', 'runData', table);
+
+%%
+
+for i = 1:size(runsLaps, 1)
+
+    matFilePath = runsLaps{i,1};
+
+     % Read in a run .mat file
+     load(matFilePath);
+
+     % Get the runID
+     runID = runStruct.metadata.runID;
+
+     % Load Associated Layers
+     runStruct = Utilities.fnLoadLayer(runStruct, 'PE');
+     runStruct = Utilities.fnLoadLayer(runStruct, 'KAP');
+
+     % Get the final lap number
+     finalLapNumber = runStruct.metadata.laps(size(runStruct.metadata.laps,2)).lapNumber;
+
+     % Only keep flying laps (and exclude L1)
+     runData = runStruct.data(runStruct.data.lapNumber > 1, :);
+     runData = runData(runData.lapNumber < runData.lapNumber(end), :);
+
+     % Exclude specified laps
+     if ~isempty(runsLaps{i,2})
+
+         runData = runData(runData.lapNumber ~= runsLaps{i,2}, :);
+
+
+     end
+
+     % Check current number of entries in the struct
+     nEntries = size(data, 2);
+
+     if isempty(data(1).runID)
+
+         j = 1;
+
+     else
+
+         j = nEntries + 1;
+
+     end
+
+     % Populate the struct
+     data(j).runID = runID;
+     data(j).runData = runData;
+
+
+end
+
+%% Join the data as an array
+dataArray = [];
+
+for i = 1:size(data, 2)
+
+    AIW_Table = Utilities.fnLoadAIW(runsLaps{i,3});
+    AIW_Data = [AIW_Table.x, AIW_Table.y];
+
+    % Get the curvature, kappa
+    [kappa, ~] = PostProcessing.PE.fnCalculateCurvature([AIW_Table.x, AIW_Table.y]);
+
+
+    spacing = 0.1;
+    method = 'spline';
+
+    xInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.x, spacing, method);
+    yInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.y, spacing, method);
+    kappaInterp = Utilities.fnInterpolateByDist(AIW_Data, kappa, spacing, method);
+
+    data_i = data(i).runData;
+
+    curvatureCol = data_i.kappa;
+
+    lookAheadKappa = zeros([size(data_i, 1), 5]);
+
+    dataArray_i = [data_i.CTE, curvatureCol, data_i.HeadingError, data_i.steerAngle ];
+    
+    if i == 1
+
+        dataArray = dataArray_i;
+
+    else
+
+        dataArray = [dataArray; dataArray_i];
+
+    end
+
+end
+%% Join the data into a single table
+
+columnNames = {
+    'CTE';
+    'curvature';
+    'HeadingError';
+    'steerAngle';
+};
+
+
+trainingData = array2table(dataArray, 'VariableNames',columnNames);
+
+%% Export to CSV
+
+writetable(trainingData, 'TrainingData.csv');
+
+%% View Input Space
+plotInputSpace(trainingData, [1:3]);
