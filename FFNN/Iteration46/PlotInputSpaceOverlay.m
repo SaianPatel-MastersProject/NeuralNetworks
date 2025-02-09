@@ -1,7 +1,7 @@
 %% Script to overlay a run with the input space
 
 % Load Run Struct
-load('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D2_R02.mat')
+load('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D7_R05.mat')
 
 % Load layers
 runStruct = Utilities.fnLoadLayer(runStruct, 'PE');
