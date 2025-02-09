@@ -7,7 +7,6 @@ runsLaps = {
 data = struct('runID', '', 'lapData', table);
 
 %% Read in the AIW Data and Interpolate it, get curvature (kappa)
-% AIW_Table = readtable('+PostProcessing\+CTE\2kF_SUZE9.csv');
 AIW_Table = Utilities.fnLoadAIW('SUZ');
 AIW_Data = [AIW_Table.x, AIW_Table.y];
 
@@ -22,16 +21,6 @@ xInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.x, spacing, method);
 yInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.y, spacing, method);
 kappaInterp = Utilities.fnInterpolateByDist(AIW_Data, kappa, spacing, method);
 
-% nPoints  = 10000;
-% interpMethod = 'spline';
-% 
-% AIW_Data = [AIW_Table.x, AIW_Table.y];
-% dBetweenPoints = (sqrt(diff(AIW_Data(:,1)).^2 + diff(AIW_Data(:,2)).^2));
-% rollingDistance = [0; cumsum(dBetweenPoints)];
-% dNew = (linspace(0, rollingDistance(end), nPoints))';
-% xInterp = interp1(rollingDistance, AIW_Data(:,1), dNew, interpMethod);
-% yInterp = interp1(rollingDistance, AIW_Data(:,2), dNew, interpMethod);
-% kappaInterp = interp1(rollingDistance, kappa, dNew, interpMethod);
 AIW_Data = [xInterp, yInterp];
 
 %% Create Sigmoid for dLookAhead

@@ -28,13 +28,13 @@ X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, r
 
 # Define the FNN model
 model = Sequential([
-    # Dense(16, activation='relu', input_shape=(X_train.shape[1],)),
-    # Dense(8, activation='relu'),
-    # Dense(1, activation='tanh')  # Output in range [-1, 1]
-    Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
-    Dense(64, activation='relu'),
-    Dense(32, activation='relu'),
+    Dense(16, activation='relu', input_shape=(X_train.shape[1],)),
+    Dense(8, activation='relu'),
     Dense(1, activation='tanh')  # Output in range [-1, 1]
+    # Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
+    # Dense(64, activation='relu'),
+    # Dense(32, activation='relu'),
+    # Dense(1, activation='tanh')  # Output in range [-1, 1]
 ])
 
 # Compile the model
