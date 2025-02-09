@@ -13,6 +13,11 @@ obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\202
 
 %%%%%%%% Plotting Commands
 
+%% Set plot colours
+% Human as blue
+% FFNN as red
+obj = obj.addLapsColours({'#0077FF', '#FF0000'});
+
 %% Plot the racing line
 obj.plotRacingLine(true);
 
@@ -40,5 +45,5 @@ obj.plotRunViolins();
 obj.plotGroupedMetrics();
 
 %% Plot TF Estimate
-obj.plotTF('CTE', 'steerAngle', 'Lap');
-obj.plotTF('kappa', 'steerAngle', 'Lap');
+obj.plotTF('CTE', 'steerAngle', 'Run');
+obj.plotTF('kappa', 'steerAngle', 'Run');
