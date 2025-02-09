@@ -22,16 +22,6 @@ xInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.x, spacing, method);
 yInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.y, spacing, method);
 kappaInterp = Utilities.fnInterpolateByDist(AIW_Data, kappa, spacing, method);
 
-% nPoints  = 10000;
-% interpMethod = 'spline';
-% 
-% AIW_Data = [AIW_Table.x, AIW_Table.y];
-% dBetweenPoints = (sqrt(diff(AIW_Data(:,1)).^2 + diff(AIW_Data(:,2)).^2));
-% rollingDistance = [0; cumsum(dBetweenPoints)];
-% dNew = (linspace(0, rollingDistance(end), nPoints))';
-% xInterp = interp1(rollingDistance, AIW_Data(:,1), dNew, interpMethod);
-% yInterp = interp1(rollingDistance, AIW_Data(:,2), dNew, interpMethod);
-% kappaInterp = interp1(rollingDistance, kappa, dNew, interpMethod);
 AIW_Data = [xInterp, yInterp];
 
 %%
@@ -89,7 +79,7 @@ for i = 1:size(data, 2)
     lookAheadKappa = zeros([size(data_i, 1), 1]);
 
     dLookAhead = 40;
-    iLookAhead = 40/0.1;
+    iLookAhead = dLookAhead/0.1;
 
     for j = 1:size(data_i, 1)
 
