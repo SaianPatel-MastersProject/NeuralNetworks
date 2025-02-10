@@ -4,12 +4,12 @@ obj = Plotting.multiPlotter();
 
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', true, [2:31]);
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D7_R07.mat', true, [2:4]);
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D1_R02.mat', true, [2:4]);
 
 
 % Add reference lap
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', 31); % Human
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D7_R07.mat', 4); % FFNN 47
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D1_R02.mat', 4); % FFNN 47
 
 %%%%%%%% Plotting Commands
 %% Set plot colours
@@ -44,5 +44,5 @@ obj.plotRunViolins();
 obj.plotGroupedMetrics();
 
 %% Plot TF Estimate
-obj.plotTF('CTE', 'steerAngle', 'Run');
-obj.plotTF('kappa', 'steerAngle', 'Run');
+obj.plotTF('CTE', 'steerAngle', 'Lap');
+obj.plotTF('kappa', 'steerAngle', 'Lap');

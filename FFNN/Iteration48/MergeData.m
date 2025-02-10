@@ -86,7 +86,7 @@ for i = 1:size(data, 2)
     % Create Sigmoid for dLookAhead
 
     % Get look-ahead sigmoid
-    [dLookOverall, kappaSorted] = Utilities.fnLookAheadDistanceSigmoidCurvature(10, 60, 200, 0.01, kappaInterp);
+    [dLookOverall, kappaSorted] = Utilities.fnLookAheadDistanceSigmoidCurvature(6, 30, 200, 0.01, kappaInterp);
 
     data_i = data(i).runData;
 
@@ -100,9 +100,6 @@ for i = 1:size(data, 2)
     dLookAhead_0 = 3;
     iLookAhead_0 = dLookAhead_0/0.1;
 
-    dLookAhead = interp1(kappaSorted, dLookOverall, abs(kappaInterp(closestWaypointIdx)));
-    iLookAhead = round(dLookAhead/0.1);
-
     for j = 1:size(data_i, 1)
 
         xV = data_i.posX(j);
@@ -110,6 +107,9 @@ for i = 1:size(data, 2)
         % Find nearest AIW waypoint using Euclidean distance
         d = sqrt((AIW_Data(:,1) - xV).^2 + (AIW_Data(:,2) -yV).^2);
         [minDist, closestWaypointIdx] = min(d);
+
+        dLookAhead = interp1(kappaSorted, dLookOverall, abs(kappaInterp(closestWaypointIdx)));
+        iLookAhead = round(dLookAhead/0.1);
 
         % Look Ahead in Kappa
         lookAhead_0 = Utilities.fnGetLookAheadValues(kappaInterp, closestWaypointIdx, iLookAhead_0, 1);
@@ -152,9 +152,25 @@ columnNames = {
 
 trainingData = array2table(dataArray, 'VariableNames',columnNames);
 
+%% Normalise the inputs
+trainingDataNorm = minMaxNormalize(trainingData(:, 1:4));
+trainingDataNorm = [trainingDataNorm, trainingData(:,5)];
 %% Export to CSV
 
 writetable(trainingData, 'TrainingData.csv');
+writetable(trainingDataNorm, 'TrainingDataNorm.csv');
 
 %% View Input Space
 plotInputSpace(trainingData, [1:4]);
+
+%% Get the min and max of each input col
+minMaxArray = zeros([2, length(columnNames)-1,]);
+
+for i = 1:length(columnNames)-1
+
+    minMaxArray(1,i) = min(trainingData.(columnNames{i}));
+    minMaxArray(2,i) = max(trainingData.(columnNames{i}));
+
+end
+
+minMaxTable = array2table(minMaxArray, 'VariableNames', columnNames(1:end-1));

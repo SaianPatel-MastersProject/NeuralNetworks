@@ -16,7 +16,7 @@ np.random.seed(42)
 tf.random.set_seed(42)
 
 # Load the dataset from a CSV file (replace 'your_dataset.csv' with your actual file name)
-data = pd.read_csv('Iteration48\\TrainingData.csv')
+data = pd.read_csv('Iteration48\\TrainingDataNorm.csv')
 
 # Separate input features (first 4 columns) and output (5th column)
 X = data.iloc[:, :4].values  # First 4 columns as input features

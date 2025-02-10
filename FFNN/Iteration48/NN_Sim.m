@@ -22,7 +22,7 @@ AIW_Data = [xInterp, yInterp];
 %% Create Sigmoid for dLookAhead
 
 % Get look-ahead sigmoid
-[dLookOverall, kappaSorted] = Utilities.fnLookAheadDistanceSigmoidCurvature(10, 60, 200, 0.01, kappaInterp);
+[dLookOverall, kappaSorted] = Utilities.fnLookAheadDistanceSigmoidCurvature(5, 30, 200, 0.01, kappaInterp);
 
 %% Import Reference Run
 
