@@ -100,9 +100,6 @@ for i = 1:size(data, 2)
     dLookAhead_0 = 3;
     iLookAhead_0 = dLookAhead_0/0.1;
 
-    dLookAhead = interp1(kappaSorted, dLookOverall, abs(kappaInterp(closestWaypointIdx)));
-    iLookAhead = round(dLookAhead/0.1);
-
     for j = 1:size(data_i, 1)
 
         xV = data_i.posX(j);
@@ -110,6 +107,9 @@ for i = 1:size(data, 2)
         % Find nearest AIW waypoint using Euclidean distance
         d = sqrt((AIW_Data(:,1) - xV).^2 + (AIW_Data(:,2) -yV).^2);
         [minDist, closestWaypointIdx] = min(d);
+
+        dLookAhead = interp1(kappaSorted, dLookOverall, abs(kappaInterp(closestWaypointIdx)));
+        iLookAhead = round(dLookAhead/0.1);
 
         % Look Ahead in Kappa
         lookAhead_0 = Utilities.fnGetLookAheadValues(kappaInterp, closestWaypointIdx, iLookAhead_0, 1);
