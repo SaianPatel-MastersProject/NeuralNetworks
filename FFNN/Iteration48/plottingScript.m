@@ -38,6 +38,7 @@ obj.plotEnvelope(2, 'steerAngle', false);
 
 %% Plot PSPectrum
 obj.plotPSpectrum('steerAngle', 'Run')
+obj.plotPSpectrum('CTE', 'Run')
 
 %% Plot Violins
 obj.plotRunViolins();
@@ -46,3 +47,10 @@ obj.plotGroupedMetrics();
 %% Plot TF Estimate
 obj.plotTF('CTE', 'steerAngle', 'Lap');
 obj.plotTF('kappa', 'steerAngle', 'Lap');
+
+%% Create averages tables
+avgMetricsCTE(1,:) = mean(obj.runData(1).metricsCTE,1);
+avgMetricsCTE(2,:) = mean(obj.runData(2).metricsCTE,1);
+
+avgMetricsSteer(1,:) = mean(obj.runData(1).metricsSteer,1);
+avgMetricsSteer(2,:) = mean(obj.runData(2).metricsSteer,1);
