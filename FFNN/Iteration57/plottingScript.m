@@ -4,21 +4,23 @@ obj = Plotting.multiPlotter();
 
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', true, [2:31]);
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D7_R03.mat', true, [2:4]);
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_17\2025_FYP02_17_D1_R02.mat', true, [2:4]);
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D1_R02.mat', true, [2:4]);
 
 
 % Add reference lap
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', 31); % Human
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D7_R03.mat', 4); % FFNN 47
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_17\2025_FYP02_17_D1_R02.mat', 4); % FFNN 57
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D1_R02.mat', 4); % FFNN 48
 
 %%%%%%%% Plotting Commands
 %% Set plot colours
 % Human as blue
 % FFNN as red
-obj = obj.addLapsColours({'#0077FF', '#FF0000'});
+obj = obj.addLapsColours({'#0077FF', '#FF0000', '#15B405'});
 %% Plot the racing line
 obj.plotRacingLine(true);
-obj.plotLineDistributionPerCorner(1, true, [1,2])
+obj.plotLineDistributionPerCorner(1, true, [1,2, 3])
 
 %% Plot steering angle with errors
 obj.plotErrorsWithSteering();
