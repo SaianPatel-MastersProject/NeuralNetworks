@@ -105,7 +105,20 @@ for i = 1:size(data, 2)
     % Get dHE
     dHE = [0; diff(data_i.HeadingError)] ./ 0.01;
     % Filter
-    dHE = movmean(dHE, 51);
+    % dHE = movmean(dHE, 51);
+    Ts = 0.01;
+    tau = 0.5;
+    alpha = Ts / (tau + Ts);
+    b = Ts;
+    a = [Ts+tau, -tau];
+
+    dHE = filter(b, a, dHE);
+
+    % for j = 2:size(dHE, 1)
+    % 
+    %     dHE_filt(j,1) = alpha * dHE(j) - (1 - alpha) * dHE(j-1);
+    % 
+    % end
 
     for j = 1:size(data_i, 1)
 
