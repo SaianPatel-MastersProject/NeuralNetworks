@@ -69,7 +69,15 @@ NN_Sim_Data = [runStruct.data.time - runStruct.data.time(1)];
 dCurvatureCol = [0; diff(runStruct.data.kappa) ./ (40*0.01)];
 
 dHE =[0; diff(runStruct.data.HeadingError)] ./ (0.01);
-dHE = movmean(dHE, 51);
+% Filter
+% dHE = movmean(dHE, 51);
+Ts = 0.01;
+tau = 0.5;
+alpha = Ts / (tau + Ts);
+b = Ts;
+a = [Ts+tau, -tau];
+
+dHE = filter(b, a, dHE);
 
 % Needed for LA HE
 dX = diff(runStruct.data.posX);
