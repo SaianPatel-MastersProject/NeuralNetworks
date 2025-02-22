@@ -80,3 +80,9 @@ plt.legend()
 plt.show()
 
 model.export("Iteration62\\SteeringModel_Iteration62")
+
+from sklearn.inspection import permutation_importance
+
+result = permutation_importance(model, X_test, y_test, scoring='neg_mean_absolute_error')
+feature_importance = result.importances_mean
+print("Feature Importance:", feature_importance)

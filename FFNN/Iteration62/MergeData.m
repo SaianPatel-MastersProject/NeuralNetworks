@@ -106,7 +106,7 @@ for i = 1:size(data, 2)
     iLookAhead_0 = dLookAhead_0/0.1;
 
     % Get dHE
-    dHE = [0; diff(data_i.HeadingError)] ./ 0.01;
+    dHE = [0; diff(data_i.HeadingError)] ./ 0.1;
 
     for j = 1:size(data_i, 1)
 
