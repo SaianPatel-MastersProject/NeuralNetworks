@@ -1,17 +1,19 @@
-%% Plotting Script - Iteration 54
+%% Plotting Script - Iteration 62
 
 obj = Plotting.multiPlotter();
 
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', true, [2:31]);
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_17\2025_FYP02_17_D1_R04.mat', true, [2:4]);
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D1_R02.mat', true, [2:4]);
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_17\2025_FYP02_17_D6_R06.mat', true, [2:4]); % FFN 62
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_17\2025_FYP02_17_D1_R04.mat', true, [2:4]); % FFNN 58
+
 
 
 % Add reference lap
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', 31); % Human
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_17\2025_FYP02_17_D6_R06.mat', 4); % FFNN 62
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_17\2025_FYP02_17_D1_R04.mat', 4); % FFNN 58
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_10\2025_FYP02_10_D1_R02.mat', 4); % FFNN 48
+
 
 %%%%%%%% Plotting Commands
 %% Set plot colours
