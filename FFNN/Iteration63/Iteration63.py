@@ -47,7 +47,7 @@ model.summary()
 history = model.fit(
     X_train, y_train,
     validation_data=(X_val, y_val),
-    epochs=50,
+    epochs=5,
     batch_size=32,
     verbose=1
 )
@@ -80,3 +80,17 @@ plt.legend()
 plt.show()
 
 model.export("Iteration63\\SteeringModel_Iteration63")
+
+import shap
+
+# Initialize the SHAP explainer
+explainer = shap.Explainer(model, X_train)  # Use the trained model and training data
+
+# Compute SHAP values for the test set
+shap_values = explainer(X_test)
+
+# Plot a waterfall plot for a specific test example (e.g., first sample)
+shap.plots.waterfall(shap_values[0])
+
+# summarize the effects of all the features
+shap.plots.beeswarm(shap_values)
