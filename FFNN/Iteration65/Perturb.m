@@ -175,6 +175,16 @@ for i = 1:nInputs
 
 end
 
+% Express as a percentage
+MAE_pct = MAE(1:2, :);
+for i = 1:nInputs
+
+    MAE_pct(1, i) = ((MAE(2, i) - MAE(1, i)) / MAE(1, i)) * 100;
+    MAE_pct(2, i) = ((MAE(3, i) - MAE(1, i)) / MAE(1, i)) * 100;
+
+
+end
+
 %% Plotting results
 figure;
 % subplot(5,1,1)
