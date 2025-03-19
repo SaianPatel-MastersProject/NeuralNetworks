@@ -161,7 +161,7 @@ writetable(trainingData, 'TrainingData.csv');
 writetable(trainingDataNorm, 'TrainingDataNorm.csv');
 
 %% View Input Space
-plotInputSpace(trainingData, [1:4]);
+plotInputSpace(trainingData, [1:5]);
 
 %% Get the min and max of each input col
 minMaxArray = zeros([2, length(columnNames)-1,]);
