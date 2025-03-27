@@ -18,9 +18,9 @@ function plotInputSpace(trainingData, inputIdx)
         for j = 1:nInputs
 
             subplot(nInputs, nInputs, counter)
-            scatter(inputData.(inputColumns{i}), inputData.(inputColumns{j}), 'filled', 'SizeData', 6);
-            xlabel(inputColumns{i});
-            ylabel(inputColumns{j});
+            scatter(inputData.(inputColumns{i}), inputData.(inputColumns{j}), 'filled', 'SizeData', 2);
+            xlabel(inputColumns{i}, 'FontWeight', 'bold');
+            ylabel(inputColumns{j}, 'FontWeight', 'bold');
             grid on;
             grid minor;
             counter = counter + 1;
