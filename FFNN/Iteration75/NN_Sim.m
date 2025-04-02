@@ -1,5 +1,5 @@
 %% Import Neural Network
-net = importNetworkFromONNX("SteeringModel_Iteration74_SUZ.onnx", "InputDataFormats", "BC");
+net = importNetworkFromONNX("SteeringModel_Iteration75.onnx", "InputDataFormats", "BC");
 
 %%
 trainingData_Sim = readtable('TrainingData.csv', 'VariableNamingRule','preserve');
@@ -9,7 +9,6 @@ columnNames = {
     'curvature';
     'HeadingError';
     'lookAhead1';
-    'kappaIntegral';
     'steerAngle';
 };
 
@@ -120,17 +119,7 @@ for i = 1:size(runStruct.data, 1)
     lookAhead_i = Utilities.fnGetLookAheadValues(kappaInterp, closestWaypointIdx, iLookAhead, 1);
     [~, ~, lookAheadHE_i] = PostProcessing.PE.fnCalculatePathErrorLA(currentPose, AIW_Data, iLookAhead);
 
-    % Integrate over the next 40m
-    dIntegrate = 40;
-
-
-    kappaIntegrate = Utilities.fnGetLookAheadValues(kappaInterp, closestWaypointIdx, 1/0.1, dIntegrate);
-
-    % Integrate curvature
-    distVector = (1:40);
-    kappaIntegral_i = trapz(distVector, kappaIntegrate);
-
-    input_i = [CTE, lookAhead_0, HeadingError, lookAhead_i, kappaIntegral_i];
+    input_i = [CTE, lookAhead_0, HeadingError, lookAhead_i];
 
     for j = 1:size(minMaxArray,2)
 
@@ -144,8 +133,8 @@ for i = 1:size(runStruct.data, 1)
     steeringOutput_i = predict(net, input_i);
 
     % Populate the array
-    NN_Sim_Data(i,2:6) = input_i;
-    NN_Sim_Data(i,7) = steeringOutput_i;
+    NN_Sim_Data(i,2:5) = input_i;
+    NN_Sim_Data(i,6) = steeringOutput_i;
 
 end
 
@@ -154,7 +143,7 @@ figure;
 % subplot(5,1,1)
 plot(NN_Sim_Data(:,1), runStruct.data.steerAngle)
 hold on
-plot(NN_Sim_Data(:,1), NN_Sim_Data(:,7))
+plot(NN_Sim_Data(:,1), NN_Sim_Data(:,6))
 xlabel('Time (s)')
 ylabel('steerAngle')
 grid;
