@@ -1,5 +1,5 @@
 %% Import Neural Network
-net = importNetworkFromONNX("SteeringModel_Iteration74.onnx", "InputDataFormats", "BC");
+net = importNetworkFromONNX("SteeringModel_Iteration74_SUZ.onnx", "InputDataFormats", "BC");
 
 %%
 trainingData_Sim = readtable('TrainingData.csv', 'VariableNamingRule','preserve');
@@ -27,8 +27,8 @@ end
 
 %% Read in the AIW Data and Interpolate it, get curvature (kappa)
 % AIW_Table = readtable('+PostProcessing\+CTE\2kF_SUZE9.csv');
-% AIW_Table = Utilities.fnLoadAIW('SUZ');
-AIW_Table = Utilities.fnLoadAIW('INT');
+AIW_Table = Utilities.fnLoadAIW('SUZ');
+% AIW_Table = Utilities.fnLoadAIW('INT');
 AIW_Data = [AIW_Table.x, AIW_Table.y];
 
 % Get the curvature, kappa
@@ -51,11 +51,11 @@ AIW_Data = [xInterp, yInterp];
 
 %% Import Reference Run
 % SUZ
-% matFilePath = 'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat';
-% lap = 31;
+matFilePath = 'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat';
+lap = 31;
 % INT
-matFilePath = 'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_24\2025_FYP03_24_D4_R06.mat';
-lap = 12;
+% matFilePath = 'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_24\2025_FYP03_24_D4_R06.mat';
+% lap = 12;
 
 % Read in a run .mat file
 load(matFilePath);
