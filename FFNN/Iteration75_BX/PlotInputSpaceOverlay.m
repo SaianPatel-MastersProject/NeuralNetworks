@@ -1,7 +1,7 @@
 %% Script to overlay a run with the input space
 
 % Load Run Struct
-load('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D2_R02.mat')
+load('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D1_R02.mat')
 
 % Load layers
 runStruct = Utilities.fnLoadLayer(runStruct, 'PE');
@@ -9,4 +9,4 @@ runStruct = Utilities.fnLoadLayer(runStruct, 'KAP');
 
 %%
 % Call the plotter
-fnInputSpaceOverlay(TrainingData, runStruct.data(and(runStruct.data.lapNumber > 0, runStruct.data.lapNumber < 5), :), [1:4]);
+fnInputSpaceOverlay(TrainingData, runStruct.data((runStruct.data.lapNumber == 4), :), [1:5]);
