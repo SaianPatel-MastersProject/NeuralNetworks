@@ -1,6 +1,6 @@
 %% Runs and Laps
 runsLaps = {
-    'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R05.mat', [], 'SUZ'; ... % SUZ BX
+    'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R05.mat', [], 'SUZ'; ... % SUZ LZ
 };
 
 %% Read in each run data

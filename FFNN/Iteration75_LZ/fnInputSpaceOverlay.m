@@ -1,28 +1,46 @@
 %% Function to overlay run data with training data
 function fnInputSpaceOverlay(trainingData, runData, trainingIdx)
     
-    % Get AIW Data
-    % Read in the AIW Data and Interpolate it, get curvature (kappa)
-    AIW_Table = readtable('+PostProcessing\+CTE\2kF_SUZE9.csv');
+    AIW_Table = Utilities.fnLoadAIW('SUZ');
+    AIW_Data = [AIW_Table.x, AIW_Table.y];
+
     % Get the curvature, kappa
     [kappa, ~] = PostProcessing.PE.fnCalculateCurvature([AIW_Table.x, AIW_Table.y]);
 
-    nPoints  = 10000;
-    interpMethod = 'spline';
 
-    AIW_Data = [AIW_Table.x, AIW_Table.y];
-    dBetweenPoints = (sqrt(diff(AIW_Data(:,1)).^2 + diff(AIW_Data(:,2)).^2));
-    rollingDistance = [0; cumsum(dBetweenPoints)];
-    dNew = (linspace(0, rollingDistance(end), nPoints))';
-    xInterp = interp1(rollingDistance, AIW_Data(:,1), dNew, interpMethod);
-    yInterp = interp1(rollingDistance, AIW_Data(:,2), dNew, interpMethod);
-    kappaInterp = interp1(rollingDistance, kappa, dNew, interpMethod);
+    spacing = 0.1;
+    method = 'spline';
+
+    xInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.x, spacing, method);
+    yInterp = Utilities.fnInterpolateByDist(AIW_Data, AIW_Table.y, spacing, method);
+    kappaInterp = Utilities.fnInterpolateByDist(AIW_Data, kappa, spacing, method);
+
     AIW_Data = [xInterp, yInterp];
+
+    % Get look-ahead sigmoid
+    [dLookOverall, kappaSorted] = Utilities.fnLookAheadDistanceSigmoidCurvature(6, 30, 200, 0.01, kappaInterp);
 
     % Create the equivalents of the training data for the run data (with
     % the same column names)
-    runData.dCTE = [0; diff(runData.CTE)]; % Derivative of CTE
     runData.curvature = runData.kappa; % Curvature (kappa)
+    runData.lookAhead1 = runData.kappa; % Look-Ahead Curvature (kappa1)
+
+    for i = 1:size(runData, 1)
+
+        xV = runData.posX(i);
+        yV = runData.posY(i);
+
+        % Find nearest AIW waypoint using Euclidean distance
+        d = sqrt((AIW_Data(:,1) - xV).^2 + (AIW_Data(:,2) -yV).^2);
+        [~, closestWaypointIdx] = min(d);
+
+        dLookAhead = interp1(kappaSorted, dLookOverall, abs(runData.curvature(i)));
+        iLookAhead = round(dLookAhead/0.1);
+
+        % Look Ahead in Kappa
+        runData.lookAhead1(i) = Utilities.fnGetLookAheadValues(kappaInterp, closestWaypointIdx, iLookAhead, 1);
+
+    end
 
     % Get the column names of the training data specified
     % Get the column names from the inputs
@@ -68,7 +86,8 @@ function fnInputSpaceOverlay(trainingData, runData, trainingIdx)
         hold on
 
         % plot max and min values as a line
-        t = (1:nPoints)' .* 0.01;
+        % t = (1:nPoints)' .* 0.01;
+        t = runData.time;
         maxVal = max(inputData.(inputColumns{i}));
         maxVals(1:nPoints, 1) = maxVal;
         minVal = min(inputData.(inputColumns{i}));
