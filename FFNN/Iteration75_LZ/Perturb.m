@@ -1,5 +1,5 @@
 %% Import Neural Network
-net = importNetworkFromONNX("SteeringModel_Iteration66.onnx", "InputDataFormats", "BC");
+net = importNetworkFromONNX("SteeringModel_Iteration75_LZ.onnx", "InputDataFormats", "BC");
 
 %%
 trainingData_Sim = readtable('TrainingData.csv', 'VariableNamingRule','preserve');
@@ -9,7 +9,6 @@ columnNames = {
     'curvature';
     'HeadingError';
     'lookAhead1';
-    'dHE';
     'steerAngle';
 };
 
@@ -47,8 +46,8 @@ AIW_Data = [xInterp, yInterp];
 
 %% Import Reference Run
 
-matFilePath = 'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat';
-lap = 31;
+matFilePath = 'D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R05.mat';
+lap = 20;
 
 % Read in a run .mat file
 load(matFilePath);
@@ -112,7 +111,7 @@ for i = 1:size(runStruct.data, 1)
     lookAhead_i = Utilities.fnGetLookAheadValues(kappaInterp, closestWaypointIdx, iLookAhead, 1);
     [~, ~, lookAheadHE_i] = PostProcessing.PE.fnCalculatePathErrorLA(currentPose, AIW_Data, iLookAhead);
 
-    input_i = [CTE, lookAhead_0, HeadingError, lookAhead_i, dHE(i)];
+    input_i = [CTE, lookAhead_0, HeadingError, lookAhead_i];
 
     for j = 1:size(minMaxArray,2)
 
@@ -125,8 +124,8 @@ for i = 1:size(runStruct.data, 1)
     steeringOutput_i = predict(net, input_i);
 
     % Populate the array
-    NN_Sim_Data(i,2:6) = input_i;
-    NN_Sim_Data(i,7) = steeringOutput_i;
+    NN_Sim_Data(i,2:5) = input_i;
+    NN_Sim_Data(i,6) = steeringOutput_i;
 
 end
 
@@ -146,7 +145,7 @@ for i = 1:nInputs
 
     for j = 1:size(iPlus, 1)
 
-        input_j = NN_Sim_Data(j, 2:6);
+        input_j = NN_Sim_Data(j, 2:5);
 
         % Replace with perturbed input
         inputPlus = input_j;
@@ -194,15 +193,3 @@ for i = 1:nInputs
 
 end
 
-%% Plotting results
-figure;
-% subplot(5,1,1)
-plot(NN_Sim_Data(:,1), runStruct.data.steerAngle)
-hold on
-plot(NN_Sim_Data(:,1), NN_Sim_Data(:,7))
-plot(NN_Sim_Data(:,1), sPlus(:,5))
-
-xlabel('Time (s)')
-ylabel('steerAngle')
-grid;
-grid minor;
