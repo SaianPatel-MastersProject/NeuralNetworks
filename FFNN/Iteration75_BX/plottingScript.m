@@ -4,23 +4,28 @@ obj = Plotting.multiPlotter();
 
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R08.mat', true, [1:21]); % BX
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D1_R02.mat', true, [2:4]); % SM75_BX
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R03.mat', true, [2:4]); % SM75_BX
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R07.mat', true, [2:4]); % SM75_BX_b
 
 
 
 % Add reference lap
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R08.mat', 21); % BX
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D1_R02.mat', 4); % SM75_BX
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R03.mat', 4); % SM75_BX
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R07.mat', 4); % SM75_BX_b
+
+% Overwrite the legend cell
+obj.plottingTools.legendCell = {'BX', 'SM75 BX', 'SM75 BX b'};
 
 
 %%%%%%%% Plotting Commands
 %% Set plot colours
 % Human as blue
 % FFNN as red
-obj = obj.addLapsColours({'#0077FF', '#FF0000'});
+obj = obj.addLapsColours({'#0077FF', '#FF0000', '#4CBB17'});
 %% Plot the racing line
 obj.plotRacingLine(true);
-obj.plotLineDistributionPerCorner(1, true, [2])
+obj.plotLineDistributionPerCorner(1, true, [2,3])
 
 %% Plot steering angle with errors
 obj.plotErrorsWithSteering();
@@ -40,7 +45,9 @@ obj.plotEnvelope(2, 'steerAngle', false);
 
 %% Plot PSPectrum
 obj.plotPSpectrum('steerAngle', 'Run')
+xlim([0, 5])
 obj.plotPSpectrum('CTE', 'Run')
+xlim([0, 5])
 
 %% Plot Violins
 obj.plotRunViolins();
