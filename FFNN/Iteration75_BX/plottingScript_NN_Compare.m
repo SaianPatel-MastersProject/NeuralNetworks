@@ -3,7 +3,7 @@
 obj = Plotting.multiPlotter();
 
 % Add training run
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R08.mat', true, [1:21]); % BX
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R08_AvgLap.mat', true, []); % BX
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R07.mat', true, [2:4]); % SM75_BX_b
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R03.mat', true, [2:4]); % SM75_BX
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D3_R03.mat', true, [2:4]); % SM75_BX_b
@@ -12,7 +12,7 @@ obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\202
 
 
 % Add reference lap
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R08.mat', 21); % BX
+obj = obj.addAverageLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\2025_FYP03_31_D5_R08_AvgLap.mat'); % BX
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R07.mat', 4); % SM75_BX_b
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D2_R03.mat', 4); % SM75_BX
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_07\2025_FYP04_07_D3_R03.mat', 4); % SM75_BX_C
@@ -29,7 +29,7 @@ obj.plottingTools.legendCell = {'BX', '[16, 8, 1]', '[64, 32, 1]', '[64, 32, 16,
 obj = obj.addLapsColours({'#0077FF', '#FF0000', '#4CBB17', '#FFDE21'});
 %% Plot the racing line
 obj.plotRacingLine(true);
-obj.plotLineDistributionPerCorner(1, true, [2,3,4])
+obj.plotLineDistributionPerCorner(1, true, [])
 
 %% Plot steering angle with errors
 obj.plotErrorsWithSteering();
