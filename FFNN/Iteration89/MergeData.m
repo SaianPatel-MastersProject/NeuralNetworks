@@ -112,6 +112,10 @@ for i = 1:size(data, 2)
     psi = atan2(dY, dX);
     psi = [psi; psi(end)];
 
+    % Prev steering for auto-regressive
+    prevSteering1 = zeros([size(data_i, 1), 1]);
+    prevSteering2 = zeros([size(data_i, 1), 1]);
+
 
     for j = 1:size(data_i, 1)
 
@@ -141,6 +145,18 @@ for i = 1:size(data, 2)
         [projectedCTE_j, ~, ~, ~, ~] = PostProcessing.PE.fnCalculateProjectedPathError([xV, yV, psi(j)], AIW_Data, 40);
 
         projectedCTE(j,1) = projectedCTE_j;
+
+        if j > 20
+
+            prevSteering1(j,1) = data_i.steerAngle(j-20);
+
+        end
+
+        if j > 40
+
+            prevSteering2(j,1) = data_i.steerAngle(j-40);
+
+        end
         
 
 
@@ -148,7 +164,7 @@ for i = 1:size(data, 2)
 
     
 
-    dataArray_i = [data_i.CTE, lookAheadKappa_0, data_i.HeadingError, lookAheadKappa, data_i.steerAngle ];
+    dataArray_i = [data_i.CTE, lookAheadKappa_0, data_i.HeadingError, lookAheadKappa, prevSteering1, data_i.steerAngle ];
     
     if i == 1
 
@@ -168,6 +184,7 @@ columnNames = {
     'curvature';
     'HeadingError';
     'lookAhead1';
+    'prevSteering1';
     'steerAngle';
 };
 
@@ -175,8 +192,8 @@ columnNames = {
 trainingData = array2table(dataArray, 'VariableNames',columnNames);
 
 %% Normalise the inputs
-trainingDataNorm = minMaxNormalize(trainingData(:, 1:4));
-trainingDataNorm = [trainingDataNorm, trainingData(:,5)];
+trainingDataNorm = minMaxNormalize(trainingData(:, 1:5));
+trainingDataNorm = [trainingDataNorm, trainingData(:,6)];
 
 %% Standardise the inputs
 stanArray = zeros([2, length(columnNames)-1,]);
@@ -201,7 +218,7 @@ writetable(trainingDataNorm, 'TrainingDataNorm.csv');
 writetable(trainingDataStand, 'TrainingDataStand.csv');
 
 %% View Input Space
-plotInputSpace(trainingDataStand, [1:5]);
+plotInputSpace(trainingDataStand, [1:6]);
 
 %% Get the min and max of each input col
 minMaxArray = zeros([2, length(columnNames)-1,]);

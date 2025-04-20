@@ -1,5 +1,5 @@
 %% Import Neural Network
-net = importNetworkFromONNX("SteeringModel_Iteration89.onnx", "InputDataFormats", "BC");
+net = importNetworkFromONNX("SteeringModel_Iteration89_b.onnx", "InputDataFormats", "BC");
 
 %%
 trainingData_Sim = readtable('TrainingData.csv', 'VariableNamingRule','preserve');
@@ -9,6 +9,8 @@ columnNames = {
     'curvature';
     'HeadingError';
     'lookAhead1';
+    'prevSteering1';
+    % 'prevSteering2';
     'steerAngle';
 };
 
@@ -122,7 +124,29 @@ for i = 1:size(runStruct.data, 1)
     [~, ~, lookAheadHE_i] = PostProcessing.PE.fnCalculatePathErrorLA(currentPose, AIW_Data, iLookAhead);
     [projectedCTE, ~, ~, ~, ~] = PostProcessing.PE.fnCalculateProjectedPathError([xV, yV, thetaV], AIW_Data, 40);
 
-    input_i = [CTE, lookAhead_0, HeadingError, lookAhead_i];
+    if i > 20
+
+        prevSteering1 = runStruct.data.steerAngle(i-20);
+
+    else
+
+        prevSteering1 = 0;
+
+
+    end
+
+    if i > 40
+
+        prevSteering2 = runStruct.data.steerAngle(i-40);
+
+    else
+
+        prevSteering2 = 0;
+
+
+    end
+
+    input_i = [CTE, lookAhead_0, HeadingError, lookAhead_i, prevSteering1];
 
     for j = 1:size(minMaxArray,2)
 
@@ -136,8 +160,8 @@ for i = 1:size(runStruct.data, 1)
     steeringOutput_i = predict(net, input_i);
 
     % Populate the array
-    NN_Sim_Data(i,2:5) = input_i;
-    NN_Sim_Data(i,6) = steeringOutput_i;
+    NN_Sim_Data(i,2:6) = input_i;
+    NN_Sim_Data(i,7) = steeringOutput_i;
 
 end
 
@@ -147,7 +171,7 @@ figure;
 % subplot(5,1,1)
 plot(NN_Sim_Data(:,1), runStruct.data.steerAngle)
 hold on
-plot(NN_Sim_Data(:,1), NN_Sim_Data(:,6))
+plot(NN_Sim_Data(:,1), NN_Sim_Data(:,7))
 xlabel('Time (s)')
 ylabel('steerAngle')
 grid;
