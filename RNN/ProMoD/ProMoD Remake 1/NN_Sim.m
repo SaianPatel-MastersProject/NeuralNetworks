@@ -1,5 +1,5 @@
 %% Import Neural Network
-net = importNetworkFromONNX("SM_ProMoD_1.onnx", "InputDataFormats", "BTC");
+net = importNetworkFromONNX("steering_model_3.onnx", "InputDataFormats", "BTC");
 
 %%
 trainingData_Sim = readtable('TrainingData.csv', 'VariableNamingRule','preserve');
@@ -150,8 +150,8 @@ for i = nSeq:nRows
         NN_Sim_Data(i, 2:5);
     ];
 
-    X_i = permute(X_i, [3, 2,1]);
-    X_i = reshape(X_i, 4,4,1);
+    X_i = permute(X_i, [1, 2, 3]);
+    % X_i = reshape(X_i, 4,4,1);
 
     steeringOutput_i = predict(net, X_i);
     NN_Sim_Data(i,6) = steeringOutput_i;
