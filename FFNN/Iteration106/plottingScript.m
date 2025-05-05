@@ -5,7 +5,9 @@ objH = Plotting.multiPlotter();
 objH = objH.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R03.mat', true, [2:10]); % SP k=-1.5
 objH = objH.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_28\2025_FYP04_28_D7_R02.mat', true, [1:11]); % SP k =-1.425
 objH = objH.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_28\2025_FYP04_28_D7_R04.mat', true, [1:11]); % SP k =-1.575
-
+objH = objH.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R02.mat', true, [2:9]); % SP k=-1.5
+objH = objH.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R04.mat', true, [2:10]); % SP k=-1.5
+objH = objH.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R05.mat', true, [2:8]); % SP k=-1.5
 
 
 % Add reference lap
