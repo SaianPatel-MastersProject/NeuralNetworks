@@ -173,7 +173,7 @@ for i = 1:size(data, 2)
 
     
 
-    dataArray_i = [data_i.CTE, lookAheadKappa_0, data_i.HeadingError, lookAheadKappa, prevSteering1, (prevSteering1 * yawRateGain), projectedCTE, lookAheadHE, data_i.steerAngle ];
+    dataArray_i = [data_i.CTE, lookAheadKappa_0, data_i.HeadingError, lookAheadKappa, prevSteering1, (prevSteering1 * yawRateGain), data_i.steerAngle ];
     
     if i == 1
 
@@ -199,8 +199,6 @@ columnNames = {
     'lookAhead5';
     'prevSteering';
     'prevYawRate';
-    'projectedCTE';
-    'lookAheadHE';
     'steerAngle';
 };
 
@@ -208,8 +206,8 @@ columnNames = {
 trainingData = array2table(dataArray, 'VariableNames',columnNames);
 
 %% Normalise the inputs
-trainingDataNorm = minMaxNormalize(trainingData(:, 1:12));
-trainingDataNorm = [trainingDataNorm, trainingData(:,13)];
+trainingDataNorm = minMaxNormalize(trainingData(:, 1:end-1));
+trainingDataNorm = [trainingDataNorm, trainingData(:,end)];
 
 %% Standardise the inputs
 stanArray = zeros([2, length(columnNames)-1,]);
@@ -234,7 +232,7 @@ writetable(trainingDataNorm, 'TrainingDataNorm.csv');
 writetable(trainingDataStand, 'TrainingDataStand.csv');
 
 %% View Input Space
-plotInputSpace(trainingDataStand, [1:13]);
+plotInputSpace(trainingDataStand, [1:11]);
 
 %% Get the min and max of each input col
 minMaxArray = zeros([2, length(columnNames)-1,]);
