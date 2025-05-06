@@ -3,18 +3,18 @@ obj = Plotting.multiPlotter();
 
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R03.mat', true, [2:10]); % SP k=-1.5
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D1_R08.mat', true, [2:4]); % SM113
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D2_R02.mat', true, [2:4]); % SM118
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_21\2025_FYP04_21_D2_R01.mat', true, [1]); % PID
 
 
 
 % Add reference lap
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R03.mat', 10); % SP
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D1_R08.mat', 4); % SM113
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D2_R02.mat', 4); % SM118
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_21\2025_FYP04_21_D2_R01.mat', 1); % PID
 
 % Overwrite the legend cell
-obj.plottingTools.legendCell = {'SP', 'SM113', 'PID'};
+obj.plottingTools.legendCell = {'SP', 'SM118', 'PID'};
 
 %% Stats Test & Metrics
 metricsComp = obj.fnMetricsComparison(1, [2,3]);
