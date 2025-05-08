@@ -4,19 +4,20 @@ obj = Plotting.multiPlotter();
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02_AvgLap.mat', true, []); % SP k=-1.5
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D2_R04.mat', true, [2:4]); % SM119
-
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D5_R01.mat', true, [2:4]); % PID
 
 
 % Add reference lap
 obj = obj.addAverageLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02_AvgLap.mat'); % SP
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D2_R04.mat', 4); % SM11
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D5_R01.mat', 4); % PID
 
 % Overwrite the legend cell
-obj.plottingTools.legendCell = {'SP', 'SM119'};
+obj.plottingTools.legendCell = {'SP', 'SM119', 'PID'};
 
 %% Stats Test & Metrics
-metricsComp = obj.fnMetricsComparison(1, [2]);
-CI = obj.fnConfidenceIntervals(1, [2], 0.05);
+metricsComp = obj.fnMetricsComparison(1, [2,3]);
+CI = obj.fnConfidenceIntervals(1, [2,3], 0.05);
 
 %%%%%%%% Plotting Commands
 %% Set plot colours
