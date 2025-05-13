@@ -3,16 +3,16 @@ obj = Plotting.multiPlotter();
 
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R03.mat', true, [2:10]); % SP k=-1.5
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D5_R04.mat', true, [2:4]); % SM128
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D2_R01.mat', true, [2:4]); % SM129
 
 
 
 % Add reference lap
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP04_14\2025_FYP04_14_D7_R03.mat', 10); % SP
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_05\2025_FYP05_05_D5_R04.mat', 4); % SM128
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D2_R01.mat', 4); % SM129
 
 % Overwrite the legend cell
-obj.plottingTools.legendCell = {'SP', 'SM128'};
+obj.plottingTools.legendCell = {'SP', 'SM129'};
 
 %% Stats Test & Metrics
 metricsComp = obj.fnMetricsComparison(1, [2]);
@@ -50,11 +50,8 @@ xlim([0, 5])
 obj.plotPSpectrum('CTE', 'Run')
 xlim([0, 5])
 
-%% Plot Violins
-obj.plotRunViolins();
-obj.plotGroupedMetrics();
+%% Deadzone
+obj.plotSteeringDeadzone(400, 'Lap')
 
-%% Plot TF Estimate
-obj.plotTF('CTE', 'steerAngle', 'Lap', false);
-obj.plotTF('kappa', 'steerAngle', 'Lap', false);
+%% Average Lap Analysis
 
