@@ -36,3 +36,6 @@ FFNN/Iteration128/TrainingDataNorm.csv
 FFNN/Iteration128/TrainingDataStand.csv
 RNN/RNN_Training_Data_Stand.csv
 RNN/TrainingData.csv
+FFNN/Iteration129/TrainingDataStand.csv
+FFNN/Iteration129/TrainingDataNorm.csv
+FFNN/Iteration129/TrainingData.csv
