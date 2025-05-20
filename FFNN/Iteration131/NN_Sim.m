@@ -1,5 +1,5 @@
 %% Import Neural Network
-net = importNetworkFromONNX("SteeringModel_Iteration131.onnx", "InputDataFormats", "BC");
+net = importNetworkFromONNX("SteeringModel_Iteration131_b.onnx", "InputDataFormats", "BC");
 
 %%
 trainingData_Sim = readtable('TrainingData.csv', 'VariableNamingRule','preserve');
