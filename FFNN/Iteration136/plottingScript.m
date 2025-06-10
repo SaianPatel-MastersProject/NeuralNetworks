@@ -12,7 +12,7 @@ obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\202
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D3_R09.mat', 4); % SM136
 
 % Overwrite the legend cell
-obj.plottingTools.legendCell = {'SP', 'SM136'};
+obj.plottingTools.legendCell = {'D2', 'DM2'};
 
 %% Stats Test & Metrics
 metricsComp = obj.fnMetricsComparison(1, [2]);
