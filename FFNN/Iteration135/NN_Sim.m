@@ -170,9 +170,9 @@ end
 %% Plotting results
 figure;
 % subplot(5,1,1)
-plot(NN_Sim_Data(:,1), runStruct.data.steerAngle)
+plot(NN_Sim_Data(:,1), runStruct.data.steerAngle * 225)
 hold on
-plot(NN_Sim_Data(:,1), NN_Sim_Data(:,10))
+plot(NN_Sim_Data(:,1), NN_Sim_Data(:,10) * 225)
 xlabel('Time (s)')
 ylabel('steerAngle')
 grid;

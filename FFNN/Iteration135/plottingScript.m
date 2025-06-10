@@ -3,16 +3,16 @@ obj = Plotting.multiPlotter();
 
 % Add training run
 obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', true, [2:31]); % SP k=-1.5
-obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D3_R08.mat', true, [2:4]); % SM135
+obj = obj.addRun('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D6_R01.mat', true, [2:4]); % SM135
 
 
 
 % Add reference lap
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP02_03\2025_FYP02_03_D1_R02.mat', 31); % SP
-obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D3_R08.mat', 4); % SM135
+obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D6_R01.mat', 4); % SM135
 
 % Overwrite the legend cell
-obj.plottingTools.legendCell = {'SP', 'SM135'};
+obj.plottingTools.legendCell = {'D1', 'DM1'};
 
 %% Stats Test & Metrics
 metricsComp = obj.fnMetricsComparison(1, [2]);
