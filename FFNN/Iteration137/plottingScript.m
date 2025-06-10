@@ -12,7 +12,7 @@ obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP03_31\202
 obj = obj.addLap('D:\Users\Saian\Workspace\Data\+ProcessedData\2025\FYP05_12\2025_FYP05_12_D3_R10.mat', 4); % SM137
 
 % Overwrite the legend cell
-obj.plottingTools.legendCell = {'LZ', 'SM137'};
+obj.plottingTools.legendCell = {'Driver 3', 'Driver Model 3'};
 
 %% Stats Test & Metrics
 metricsComp = obj.fnMetricsComparison(1, [2]);
@@ -22,7 +22,7 @@ CI = obj.fnConfidenceIntervals(1, 2, 0.05);
 %% Set plot colours
 % Human as blue
 % FFNN as red
-obj = obj.addLapsColours({'#0077FF', '#FF0000'});
+obj = obj.addLapsColours({'#0077FF', '#008000'});
 %% Plot the racing line
 obj.plotRacingLine(true);
 obj.plotLineDistribution(1, true, [2])
